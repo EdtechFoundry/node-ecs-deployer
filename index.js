@@ -53,14 +53,14 @@ Deployer.prototype.isReady = function(version) {
   var Repo = require('./lib/repos/'+repoType.toLowerCase());
   var repo = new Repo(this.app.docker);
 
-  var tagCheckDeferred = repo.isExists(version);
-  tagCheckDeferred.then(function() {
-    deployer.emit('progress', { msg: 'Found tagged docker image', service: { name: repoType }});
-  })
-
+  /*var tagCheckDeferred = repo.isExists(version);
+   tagCheckDeferred.then(function() {
+   deployer.emit('progress', { msg: 'Found tagged docker image', service: { name: repoType }});
+   })*/
   // TODO: Optionally check git too
+  //var deferreds = [ tagCheckDeferred ];
 
-  var deferreds = [ tagCheckDeferred ];
+  var deferreds = [];
   for (var i = 0; i < this.services.length; i++) {
     deferreds.push(this.services[i].isReady(version));
   }
